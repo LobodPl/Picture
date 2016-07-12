@@ -46,13 +46,23 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 | and wonderful application we have prepared for them.
 |
 */
+?>
+<html>
+<head>
+<link href="./bower_components/lightbox2/dist/css/lightbox.css" rel="stylesheet">
+</head>
+<body>
+<?php
+$n = 1;
+$folder = dir("./pic");
+while (false !== ($entry = $folder->read())) {
+	if (($entry !== ".")&&($entry !== ".."))
+   echo "<a href='./pic/".$entry."' data-lightbox='image-".$n."' data-title='Opis'><img src='./pic/".$entry."' height='150' width='150'></a><br>";
+	$n++;
 
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-
-$response = $kernel->handle(
-    $request = Illuminate\Http\Request::capture()
-);
-
-$response->send();
-
-$kernel->terminate($request, $response);
+}
+$folder->close();
+?>
+<script src="./bower_components/lightbox2/dist/js/lightbox-plus-jquery.min.js"></script>
+</body>
+</html>
